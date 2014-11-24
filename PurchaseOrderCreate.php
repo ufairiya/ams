@@ -19,9 +19,7 @@
 		$avendorList = $oMaster->getAssignVendorToPrInfo( $item_id,'pr');	
 
   }
-  
-   
-   $oAssetVendor = &Singleton::getInstance('Vendor');
+ $oAssetVendor = &Singleton::getInstance('Vendor');
   $oAssetVendor->setDb($oDb);
     $oAssetUnit = &Singleton::getInstance('AssetUnit');
   $oAssetUnit->setDb($oDb);
@@ -241,7 +239,7 @@
 									</div>
 									<div class="row-fluid">
 								
-									 <?php if($aRequest['type'] =='PR' || $aRequest['fPurchaseOrderId']!=''){?>
+									 <?php if($aRequest['type'] =='PR' || $aRequest['fPurchaseOrderId']!=''){ ?>
 									<div class="span12" id="purchaserequest" >
                                           <div class="control-group">
                                              <label class="control-label">Purchase Request Id</label>
@@ -252,6 +250,7 @@
 									       <option value="">Choose a Purchase Request Id</option>
 											 <?php
 											  $apurchaseRequestList = $oMaster->getPurchaseRequestStatus($aRequest['action']);
+											
 											  ?>
 											   
 											  <?php
@@ -347,16 +346,16 @@
                                           <div class="control-group">
                                              <label class="control-label">Select Vendor</label>
                                <div class="controls">
-                                       
-                                       <select class="span8" data-placeholder="Choose a Vendor" name="fvendorId" id="fVendorId" onChange="getVendorItemGroup(this.value);">
+                                               <select class="span8" data-placeholder="Choose a Vendor" name="fvendorId" id="fVendorId" onChange="getVendorItemGroup(this.value);">
 											   <option value="0">Choose a Vendor</option>
 											  <?php
+											  
                                               foreach($avendorList as $aVendor)
 											  {
 			  
 											 ?>
                                              
-                                              <option value="<?php echo $aVendor['id_vendor']; ?>" <?php if((!empty($edit_result[0]['id_vendor'])? $edit_result[0]['id_vendor']:$aRequest['fvendorId']) == $aVendor['id_vendor'] || (!empty($aEditPurchaseOrder['id_vendor'])? $aEditPurchaseOrder['id_vendor']:$aRequest['fvendorId']) == $aVendor['id_vendor'] || (!empty($apurchaserequest_info['quote_approval']['id_vendor'])? $apurchaserequest_info['quote_approval']['id_vendor']:$aRequest['fvendorId']) == $aVendor['id_vendor'] ) { echo 'selected=selected' ;}?>><?php echo $aVendor['vendor_name']; ?></option>
+                                              <option value="<?php echo $aVendor['id_vendor']; ?>" <?php if((!empty($edit_result[0]['id_vendor'])? $edit_result[0]['id_vendor']:$aRequest['fvendorId']) == $aVendor['id_vendor'] || (!empty($aEditPurchaseOrder['id_vendor'])? $aEditPurchaseOrder['id_vendor']:$aRequest['fvendorId']) == $aVendor['id_vendor'] || (!empty($apurchaserequest_info['quote_approval']['id_vendor'])? $apurchaserequest_info['quote_approval']['id_vendor']:$aRequest['fvendorId']) == $aVendor['id_vendor'] || (!empty($apurchaserequest_info['id_vendor'])? $apurchaserequest_info['id_vendor']:$aRequest['fvendorId']) == $aVendor['id_vendor']  ) { echo 'selected=selected' ;}?>><?php echo $aVendor['vendor_name']; ?></option>
                                           
                                              <?php
 											  }
@@ -375,7 +374,6 @@
                                 
                                     <!--Add the PO Start-->  
                                     <?php if(isset($_GET['fPurchaseOrderId']) && $aRequest['action'] != 'edit'){
-									
 									
 									?>
                                     
@@ -1793,9 +1791,13 @@ if($aRequest['action'] == 'edit' && $aRequest['submits']=='approval') {
 			   data: dataStr,
 			   cache: false,
 			   success: function(result) {
-				     $(".group1").html(result);
+			   var purchasevendor = "<?php echo $apurchaserequest_info['id_vendor'];?>";
+			   if(value != purchasevendor && value!='0')
+			   {
+				    $(".group1").html(result);
 					 $('.group2').val(0);
-					 $('.items').val(0);			
+					 $('.items').val(0);		
+					 }	
 			   }
          
 		  

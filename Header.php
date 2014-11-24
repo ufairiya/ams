@@ -4,12 +4,12 @@
 			<div class="container-fluid">
 				<!-- BEGIN LOGO -->
 				<a class="brand" href="index.php">
-				<img src="assets/img/logo.png" alt="logo" />
+				<img src="assets/img/logo.png" alt="logo" width="86" height="14" />
 				</a>
 				<!-- END LOGO -->
 				<!-- BEGIN RESPONSIVE MENU TOGGLER -->
 				<a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
-				<img src="assets/img/menu-toggler.png" alt="" />
+				<img src="assets/img/menu-toggler.png" alt="" width="18" height="13" />
 				</a>    
                       
 				<!-- END RESPONSIVE MENU TOGGLER -->				
@@ -215,7 +215,7 @@
 					<li class="dropdown"  style="margin-top: 10px;"> <span id="lblTime" style="padding-right: 40px;padding-left: 4px; color:#FF0000;"></span></li>
 					<li class="dropdown user">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<img alt="" src="assets/img/avatar1_small.jpg" />
+						<img alt="" src="assets/img/avatar1_small.jpg" width="29" height="29" />
 						<span class="username"><?php echo ucfirst($aCustomerInfo['first_name']); ?> <?php echo $aCustomerInfo['last_name']; ?></span>
 						<i class="icon-angle-down"></i>
 						</a>

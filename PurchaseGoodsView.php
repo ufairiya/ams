@@ -367,16 +367,19 @@ align='center'>
   <TBODY></TBODY></TABLE>     
 <HR>
 <BR><BR>
+<?php 
+$grncreator = $oMaster->getInventoryDocumentInfo($item_id);
+?>
 <TABLE border='0' cellSpacing='0' borderColor='black' cellPadding='0 'width="100%" 
 align='center'>
   <TBODY>
+  <TR><TD width="25%" align='left'><?php echo $grncreator['employee_grncreatorname']; ?></TD></TR>
   <TR class='srow' align='center'>
     <TD width="25%" align='left'><FONT class=subtitle><B>PREPARED 
     BY</B></FONT></TD>
     <TD width="25%" colSpan=2 align='center'><FONT class=subtitle><B>VERIFIED 
       BY</B></FONT></TD>
-      <TD width="25%" align='right'><FONT class=subtitle><B>FOLLOWED BY 
-    BY</B></FONT></TD>
+      <TD width="25%" align='right'><FONT class=subtitle><B>FOLLOWED BY</B></FONT></TD>
     <TD width="25%" align='right'><FONT class=subtitle><B>APPROVED 
     BY</B></FONT></TD></TR>
   <TR class='srow'>

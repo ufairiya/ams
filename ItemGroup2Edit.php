@@ -63,6 +63,11 @@
 	$edit_result = $oMaster->getItemGroup2Info($item_id,'id');
 	 
   } //edit
+ 
+  if($aRequest['action'] == 'Cancel')
+  {
+	 echo '<script type="text/javascript">window.location.href="ItemGroup2.php";</script>'; 
+  } //cancel
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
@@ -71,7 +76,7 @@
 <!-- BEGIN HEAD -->
 <head>
    <meta charset="utf-8" />
-   <title>EAMS|Item Group2</title>
+   <title>EAMS|Item Group 2</title>
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
    <meta content="" name="author" />
@@ -121,7 +126,7 @@
                         <span class="icon-angle-right"></span>
                      </li>
                      <li>
-                        <a href="#">Item</a>
+                        <a href="#">Asset Masters</a>
                         <span class="icon-angle-right"></span>
                      </li>
                      <li><a href="#">Item Group 2</a></li>
@@ -194,7 +199,7 @@
                                         <div class="control-group">
                                        <label class="control-label">Item Group 1<span class="required">*</span></label>
                                        <div class="controls">
-                                         <select class="large m-wrap" tabindex="1" name="fGroup1" id="fGroup1">
+                                         <select class="large m-wrap fItemGroup1Id" tabindex="1" name="fGroup1" id="fGroup1">
 											 <option value="">Choose the Item Group 1</option>
 											 <?php
 											  $aGroup1List = $oMaster->getItemGroup1List();
@@ -207,7 +212,7 @@
 											  }
 											 ?>
                                           </select>
-                                          
+                                          <span><a href="#" class="itemgroup1" title="Add New Item Group 1"><i class="icon-plus-sign" style="color:#009900;"></i></a></span>
                                        </div>
                                     </div>	                                     
                                     <div class="control-group">
@@ -233,7 +238,7 @@
                                        </div>
                                     </div>
                                  
-									 <div class="loading disabled"><p>Please wait until the Process will  Complete.</p></div>
+									 <div class="loading disabled"><p>Please wait until the Process Completes.</p></div>
                                     <div class="form-actions">
                                    <?php if($aRequest['action'] == 'Add')
 								   {
@@ -257,7 +262,7 @@
 								   }
 								  
 								   ?>
-								   <button type="button" class="btn">Cancel</button>
+								   <button type="submit" class="btn" name="action" value="Cancel">Cancel</button>
                                     </div>
                                  </form>
                                

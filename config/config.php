@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors','on');
 ini_set('default_charset', 'UTF-8');
-//ob_start("ob_gzhandler");
+ob_start("ob_gzhandler");
 header('P3P: CP="CAO PSA OUR"');
 date_default_timezone_set('Asia/Calcutta');
 session_cache_limiter( 'nocache' );

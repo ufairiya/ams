@@ -1,4 +1,5 @@
 <?php
+include_once 'config/config.php'; 
   include_once 'ApplicationHeader.php'; 
   if(!$oCustomer->isLoggedIn())
   {
@@ -23,9 +24,9 @@
 	$oAssetVendor = &Singleton::getInstance('Vendor');
     $oAssetVendor->setDb($oDb);
  
-/* echo '<pre>';
- print_r($aVendorInfo);
- exit();*/
+ /*echo '<pre>';
+ print_r($edit_result);
+ echo '</pre>';*/
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
@@ -185,7 +186,9 @@ size="2">EMAIL</FONT></TD>
                 <TD width="70%">:&nbsp; &nbsp;<B><?php echo $edit_result[0]['purchaseorderinfo']['po_number']; ?></B></TD></TR>
               <TR class="srow" align="left">
                 <TD><FONT  class="detail">&nbsp;DATE</FONT></TD>
-                <TD><FONT  class="detail">: &nbsp;<?php echo date('d/m/Y',strtotime($edit_result[0]['purchaseorderinfo']['po_duedate']));?></FONT></TD></TR>
+                <TD><FONT  class="detail">: &nbsp;<?php echo date('d/m/Y',strtotime($edit_result[0]['purchaseorderinfo']['po_duedate']));?></FONT></TD>
+                <TD><FONT  class="detail">&nbsp;APPROVED</FONT></TD>
+                <TD><FONT  class="detail">: &nbsp;<?php echo $edit_result[0]['purchaseorderinfo']['approved_by'];?></FONT></TD></TR>
                 
                 
              </TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR>
@@ -325,12 +328,26 @@ align='center'>
 <TABLE border='0' cellSpacing='0' borderColor='black' cellPadding='0' width="100%" 
 align='center'>
   <TBODY></TBODY></TABLE>
-<?php } ?>  
+<?php }
+?> 
+
+<?php
+/* Radha */
+$posid = $aRequest['id'];
+$polResult = $oMaster->getPurchaseOrderApproved($posid);
+$apprempname = $oMaster->getEmployeeInfo($polResult[approved_by]);
+$creatempname = $oMaster->getEmployeeInfo($polResult[created_by]);
+$verifyempname = $oMaster->getEmployeeInfo($polResult[modified_by]);
+/* Radha */
+?> 
 <HR>
 <BR><BR>
 <TABLE border='0' cellSpacing='0' borderColor='black' cellPadding='0 'width="100%" 
 align='center'>
   <TBODY>
+   <TR><TD width="25%" align='left'><?php echo $creatempname[employee_name];?></TD>
+    <TD width="25%" colSpan=2 align='center'><?php echo $verifyempname[employee_name];?></TD>
+<TD width="25%" align='right'><?php echo $apprempname[employee_name]; ?></TD></TR>
   <TR class='srow' align='center'>
     <TD width="25%" align='left'><FONT class=subtitle><B>PREPARED 
     BY</B></FONT></TD>
@@ -338,7 +355,7 @@ align='center'>
       BY</B></FONT></TD>
     <TD width="25%" align='right'><FONT class=subtitle><B>APPROVED 
     BY</B></FONT></TD></TR>
-  <TR class='srow'>
+   <TR class='srow'>
     <TD colSpan='4'>
       <HR width="100%" bordercolor="black" border="1">
     </TD></TR></TBODY></TABLE></TD></TR></TABLE>

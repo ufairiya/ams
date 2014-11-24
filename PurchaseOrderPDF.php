@@ -198,7 +198,15 @@ $html.='
       </TR>';
       
   $sl_nos++; }
-	  
+ 
+/* Radha */
+$posid = $aRequest['id'];
+$polResult = $oMaster->getPurchaseOrderApproved($posid);
+$apprempname = $oMaster->getEmployeeInfo($polResult[approved_by]);
+$creatempname = $oMaster->getEmployeeInfo($polResult[created_by]);
+$verifyempname = $oMaster->getEmployeeInfo($polResult[modified_by]);
+/* Radha */
+
      $html.=' 
 	  <TR class="srow" bgColor="white">
     <TD colSpan="3" align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Grand Total </b> &nbsp;&nbsp;
@@ -251,6 +259,9 @@ align="center">
 <TABLE border="0" cellSpacing="0" borderColor="black" cellPadding="0 "width="100%" 
 align="center">
   <TBODY>
+  <TR><TD width="25%" align="left">'.$creatempname[employee_name].'</TD>
+	<TD width="25%" colSpan=2 align="center">'.$verifyempname[employee_name].'</TD>
+	<TD width="25%" align="right">'.$apprempname[employee_name].'</TD></TR>
   <TR class="srow" align="center">
     <TD width="25%" align="left"><FONT class="subtitle"><B>PREPARED 
     BY</B></FONT></TD>
@@ -258,15 +269,13 @@ align="center">
       BY</B></FONT></TD>
     <TD width="25%" align="right"><FONT class="subtitle"><B>APPROVED 
     BY</B></FONT></TD></TR>
-  <TR class="srow">
+	<TR class="srow">
     <TD colSpan="4">
       <HR width="100%" bordercolor="black" border="1">
-    </TD></TR></TBODY></TABLE></TD></TR></TABLE>
-
-
-'
-;
-
+    </TD></TR></TBODY></TABLE>
+	</TD>
+	
+	</TD></TR></TABLE>';
 $stylesheet = file_get_contents('MPDF56/mpdfstylesheet.css');
 $mpdf->WriteHTML($stylesheet,1);
 $mpdf->WriteHTML($html);

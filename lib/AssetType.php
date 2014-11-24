@@ -27,6 +27,18 @@
 	  $status             = $aRequest['fStatus'];
 	  $created_by         = $_SESSION['sesCustomerInfo']['user_id'];
 	  $lookup             = strtoupper($aRequest['fLookup']);
+	  
+	  //check for duplicate values...
+	  $dupqry = "SELECT asset_type_name, lookup FROM asset_type WHERE asset_type_name ='".$asset_type_name."' OR lookup = '".$lookup."'";
+	  
+	  if($result = $this->oDb->get_results($dupqry))
+	  {
+	     return false;
+	  }
+	  else {
+	  
+	  
+	  
  $query = "INSERT INTO asset_type(id_asset_type,id_asset_parent_type,  id_asset_category, asset_type_name,asset_type_desc,	 lookup,	 created_by, created_on,modified_by, modified_on,  status ) VALUES ( null, '".$id_asset_parent_type."','". $id_asset_category."','". $asset_type_name."','". $asset_type_desc."','". $lookup."','".$created_by."',now(),'', '','".$status."')";
 
 	
@@ -45,8 +57,11 @@
 	   else { //exit();
 	      return false;
 		 
-	   }	 
-	}
+	   }	
+	   
+	   }
+	    
+	}//end function
 
 /*	public function uploadCategoryImage($files, $lastInsertId)
 	{
@@ -112,8 +127,6 @@
 	//
 	public function updateAssetType($aRequest)
 	{
-	 
-	 
 	  $done = 0;
 	  $asset_type_id      = $aRequest['fAssetTypeId'];
 	  $id_asset_category  = $aRequest['fAssetCategory'];

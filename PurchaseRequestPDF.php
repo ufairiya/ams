@@ -31,8 +31,10 @@
   $oAssetVendor = &Singleton::getInstance('Vendor');
 
   $oAssetVendor->setDb($oDb);
-
- $allResult = $oMaster->getPurchaseRequestInfo($edit_result['iteminfo'][0]['id_pr'],'id');
+  
+  $preqapproval = $oMaster->getPurchaseRequestInfo($item_id);
+ 
+  $allResult = $oMaster->getPurchaseRequestInfo($edit_result['iteminfo'][0]['id_pr'],'id');
 
 include("MPDF56/mpdf.php");
 
@@ -377,7 +379,9 @@ align="center">
 align="center">
 
   <TBODY>
-
+<TR><TD width="25%" align="left">'.$allResult['employee_name'].'</TD>
+<TD width="25%" colSpan=2 align="center"></TD>
+<TD width="25%" align="right">'.$preqapproval['employee_apprname'].'</TD></TR>
   <TR class="srow" align="center">
 
     <TD width="25%" align="left"><FONT class="subtitle"><B>PREPARED 

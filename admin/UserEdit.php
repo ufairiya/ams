@@ -8,7 +8,7 @@
   $aRequest = $_REQUEST;
    $oAssetUnit = &Singleton::getInstance('AssetUnit');
   $oAssetUnit->setDb($oDb);
-
+ 
   if(isset($aRequest['send']))
   {
     if($aresult = $oCustomer->registerNewCustomer($aRequest))
@@ -42,20 +42,15 @@
     $usertype  = "Edit User";
 	$item_id = $_REQUEST['id'];
 	$edit_result = $oCustomer->getUserInfo($item_id,'id');
-	//echo '<pre>';
-	//print_r($edit_result );
-		//echo '</pre>';
+/*	echo '<pre>';
+	print_r($edit_result );
+		echo '</pre>';*/
 	
   } //edit
    if(isset($aRequest['Update']))
   {
-  	//echo '<pre>';
-	//print_r($aRequest );
-		//echo '</pre>';
   if($aresult = $oCustomer->updateProfileInfo($aRequest))
 	{
-	 // print_r($aresult);
-	  //exit();
 	 switch($aresult['msg'])
 	  {
 		case 1:

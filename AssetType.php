@@ -10,7 +10,7 @@
   $oAssetType = &Singleton::getInstance('AssetType');
   $oAssetType->setDb($oDb);
 	
-	  $oAssetCategory = &Singleton::getInstance('AssetCategory');
+  $oAssetCategory = &Singleton::getInstance('AssetCategory');
   $oAssetCategory->setDb($oDb);
 	
 
@@ -25,7 +25,7 @@
 <!-- BEGIN HEAD -->
 <head>
    <meta charset="utf-8" />
-   <title>EAMS | AssetType</title>
+   <title>EAMS|Asset Type</title>
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
    <meta content="" name="author" />
@@ -65,8 +65,8 @@
                  
                   <!-- END STYLE CUSTOMIZER -->  
                   <h3 class="page-title">
-                     AssetType
-                     <small>AssetType  master</small>
+                     Asset Type
+                     <small>Asset Type  master</small>
                   </h3>
                   <ul class="breadcrumb">
                      <li>
@@ -97,19 +97,19 @@
 									}
 									else if($_GET['msg'] == 'updatesucess')
 									{
-										echo $msg = 'New Asset Type Updated Successfully';
+										echo $msg = 'Asset Type Updated Successfully';
 									}
 									else if($_GET['msg'] =='delsuccess')
 									{
-										echo $msg = 'New Asset Type Deleted Successfully';
+										echo $msg = 'Asset Type Deleted Successfully';
 									}
 									else if($aRequest['msg'] =='trashsuccess')
 									{
-										echo $msg = 'Item Group Moved To Trash Successfully';
+										echo $msg = 'Asset Type Moved To Trash Successfully';
 									}
 									else if($aRequest['msg'] =='error')
 									{
-										echo $msg = 'Sorry Error occur, try again';
+										echo $msg = 'Sorry Error occured, Please try again';
 									}
 									else if($_GET['msg'] =='undelsuccess')
 									{
@@ -131,7 +131,7 @@
 						<!-- BEGIN EXAMPLE TABLE PORTLET-->
 						<div class="portlet box blue">
 							<div class="portlet-title">
-								<h4><i class="icon-globe"></i>AssetType Master</h4>
+								<h4><i class="icon-globe"></i>Asset Type Master</h4>
 								<div class="tools">
 									<a href="javascript:;" class="collapse"></a>
 									</div>
@@ -142,15 +142,6 @@
                                <!-- <a href="#myModal1"  role="button" class="btn green" data-toggle="modal">Add New <i class="icon-plus"></i></a>-->								
 									  <a href="AssetTypeEdit.php?action=Add"  role="button" class="btn green" data-toggle="modal">Add New <i class="icon-plus"></i></a>
                                     </div>
-									<div class="btn-group pull-right">
-										<button class="btn dropdown-toggle" data-toggle="dropdown">Tools <i class="icon-angle-down"></i>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a href="#">Print</a></li>
-											<li><a href="#">Save as PDF</a></li>
-											<li><a href="#">Export to Excel</a></li>
-										</ul>
-									</div>
 								</div>
 								<table class="table table-striped table-bordered table-hover" id="sample_1">
 									<thead>

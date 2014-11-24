@@ -168,10 +168,12 @@
                                             <?php /*?> <a href="ConfirmDelivery.php?id=<?php echo  $item['id_asset_delivery']; ?>"  class="btn mini purple"><i class="icon-edit"></i>Confirm Delivery</a> &nbsp; &nbsp;<?php */?>
                                            
                                             <?php } ?>
-                                             <a href="?id=<?php echo  $item['id_asset_delivery']; ?>" class="btn mini purple"><i class="icon-edit"></i>View</a>
+                                            <a href="?id=<?php echo  $item['id_asset_delivery']; ?>" class="btn mini purple"><i class="icon-edit"></i>View</a>
                                             
-                                            <form action='SalesInvoiceView.php' target="_blank" method='post' enctype='multipart/form-data'><input type='hidden' name='AssetDeliveryId' value="<?php echo  $item['id_asset_delivery']; ?>"/>
-                                              <button type='submit' class="btn mini purple" style="height: 20px; margin-top:10px;" >Print</button></form>   
+                                            <a href="SalesInvoiceView.php?id=<?php echo  $item['id_asset_delivery']; ?>" class="btn mini purple">Print</a>
+                                            
+                                            <!--<form action='SalesInvoiceView.php' target="_blank" method='post' enctype='multipart/form-data'><input type='hidden' name='AssetDeliveryId' value="<?php //echo $item['id_asset_delivery']; ?>"/>
+                                              <button type='submit' class="btn mini purple" style="height: 20px; margin-top:10px;" >Print</button></form>-->   
                                            
                                            
                                             </td>

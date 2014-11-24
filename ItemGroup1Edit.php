@@ -6,7 +6,7 @@
   }
   $aCustomerInfo = $oSession->getSession('sesCustomerInfo');
   $aRequest = $_REQUEST;
-   
+ 
   $tableName = 'itemgroup1';
   $fieldName = 'itemgroup1_name';
   $fieldValue = $aRequest['fItemGroup1Name']; 
@@ -54,6 +54,10 @@
 	$edit_result = $oMaster->getItemGroup1Info($item_id,'id');
 	 
   } //edit
+  if($aRequest['action'] == 'Cancel')
+  {
+	 echo '<script type="text/javascript">window.location.href="ItemGroup1.php";</script>'; 
+  }
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
@@ -152,7 +156,7 @@
 							{ ?>
                         <h4><i class="icon-reorder"></i>Add Item Group 1</h4>
                          <?php } else if($aRequest['action'] == 'edit') {?>
-                          <h4><i class="icon-reorder"></i>Edit Item Group 2</h4>
+                          <h4><i class="icon-reorder"></i>Edit Item Group 1</h4>
                         <?php } ?>
                         <div class="tools">
                            <a href="javascript:;" class="collapse"></a>
@@ -225,7 +229,7 @@
 								   <?php
 								   }
 								   ?>
-								   <button type="button" class="btn">Cancel</button>
+								   <button type="submit" class="btn" name="action" value="Cancel">Cancel</button>
                                     </div>
                                  </form>
                                

@@ -13,7 +13,15 @@ include_once 'ApplicationHeader.php';
 //$cityListHtml    = $oMaster->getCityListHTML();
 $companyListHtml= $oMaster->getCompanyListHTML();
 $html            = $oMaster->getHTML();
-  
+$aEmptype = $oUtil->getEmployeeType();
+$EmployeeCategory .= '<select name="fEmployeeCategory" class="contact-input" id="contact-category" tabindex="1004">';
+		$EmployeeCategory .= '<option value="0">--Select Employee--</option>';
+		foreach($aEmptype as $emptype)
+			{
+				$EmployeeCategory .= '<option value="'.$emptype.'">'.$emptype.'</option>';
+			}
+		
+		$EmployeeCategory .= '</select>';
 // User settings
 $to = "user@yourdomain.com";
 $subject = "SimpleModal Contact Form";
@@ -44,8 +52,13 @@ if (empty($action)) {
 			".$companyListHtml."
 			\n
 			\n
+			<label for='contact-category'>*Employee Category:</label>
+			".$EmployeeCategory."
+			\n
+			\n
 			<br>
 			";
+			
 	$output .= "
 			<label>&nbsp;</label>
 			<button type='submit' class='contact-send contact-button' tabindex='1006'>Add Employee</button>
@@ -65,6 +78,7 @@ else if ($action == "send") {
 	$aRequest['fEmployeeLastName']  = isset($_POST["fEmployeeLastName"]) ? $_POST["fEmployeeLastName"] : ""; 
 	$aRequest['fCompanyId']     = isset($_POST["fCompanyId"]) ? $_POST["fCompanyId"] : "";
 	$aRequest["fStatus"]    = isset($_POST["fStatus"]) ? $_POST["fStatus"] : "1";
+	$aRequest["fEmployeeCategory"]    = isset($_POST["fEmployeeCategory"]) ? $_POST["fEmployeeCategory"] : "Staff";
 	
 	//$cc = isset($_POST["cc"]) ? $_POST["cc"] : "";
 	//$token = isset($_POST["token"]) ? $_POST["token"] : "";

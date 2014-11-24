@@ -35,11 +35,19 @@
   ?>
   <select>
   <?php
-  $aEmployeeList = $oMaster->getEmployeeList();
-  foreach($aEmployeeList as $aEmployee)
+  $aEmptype = $oUtil->getEmployeeType();
+  //$aEmployeeList = $oMaster->getEmployeeList();
+  foreach($aEmptype as $emptype)
   {
   ?>
+   <optgroup label="<?php echo $emptype; ?>">
+   <?php  $aEmployeeList = $oMaster->getAllEmployee($emptype);
+   foreach($aEmployeeList as $aEmployee)
+  {
+   ?>
     <option value="<?php echo $aEmployee['id_employee']; ?>" <?php if($edit_result['id_employee'] == $aEmployee['id_employee']) { echo 'selected=selected' ;}?>><?php echo $aEmployee['employee_name']; ?></option>
+	<?php } ?>
+	 </optgroup>
   <?php
   }
   ?>

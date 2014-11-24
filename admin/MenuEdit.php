@@ -9,14 +9,14 @@
   
   if(isset($aRequest['Update']))
   {
-     echo '<pre>';
-	 print_r($aRequest);  
-	 echo '</pre>';
+     //echo '<pre>';
+	 //print_r($aRequest);  
+	 //echo '</pre>';
   
     if($oMaster->updateLinkSubCat($aRequest))
 	{
 	  $msg = "Menu assigning Updated.";
-	  /*echo '<script type="text/javascript">window.location.href="User.php?msg=updatesucess";</script>';*/
+	  echo '<script type="text/javascript">window.location.href="User.php?msg=updatesucess";</script>';
 	}
 	else $msg = "Sorry";
   } //update

@@ -9,32 +9,29 @@
   
   if(isset($aRequest['Update']))
   {
-     //echo '<pre>';
-	 //print_r($aRequest);  
-	 //echo '</pre>';
+     echo '<pre>';
+	 print_r($aRequest);  
+	 echo '</pre>';
   
     if($oMaster->updateLinkSubCat($aRequest))
 	{
 	  $msg = "Menu assigning Updated.";
-	  echo '<script type="text/javascript">window.location.href="UserRole.php?msg=updatesucess";</script>';
+	  /*echo '<script type="text/javascript">window.location.href="User.php?msg=updatesucess";</script>';*/
 	}
 	else $msg = "Sorry";
   } //update
-  if(isset($aRequest['send']))
-  {
-    if($oMaster->addAssetUnit($aRequest))
-	{
-	   $msg = "User data Added.";
-	  echo '<script type="text/javascript">window.location.href="AssetUnit.php?msg=success";</script>';
-	}
-	else $msg = "Sorry";
-  } 
+ 
   if($_REQUEST['action'] == 'edit')
   {
 	$item_id = $_REQUEST['id'];
 	$edit_result = $oMaster->getUserMenuAccessInfo($item_id);
   } //edit
   
+  $aMEnu = $oMaster->getUserCrudMenuAccessInfo($item_id);
+   /* echo '<pre>';
+	 print_r($aMEnu);  
+	 echo '</pre>';
+	 exit();*/
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
@@ -152,11 +149,17 @@
                               <button class="close" data-dismiss="alert"></button>
                               You have some form errors. Please check below.
                            </div>
+						   <?php /*?> <label class="checkbox line">
+                                          <div class="checker" id="uniform-undefined"><span class=""><input type="checkbox" id="selectall"/></span></div><b> SELECT ALL</b>
+                                          </label><?php */?>
+						   
                                      <!-- <div class="control-group">
                                        <label class="control-label">Parent Menu</label>
                                        <div class="controls">
                                           <select class="large m-wrap" tabindex="1" name="fAssetParentUnit">
                                              <option value="0">No Parent</option>
+											
+											
 											 <?php
 											  $aLinkCat = $oMaster->getLinkCatList();
 											  foreach($aLinkCat as $link)
@@ -170,22 +173,36 @@
                                           </select>
                                        </div>
                                     </div>-->
-									
+									   <section id="section">
 									<div class="control-group">
                                        <label class="control-label">Assigned Menus</label>
                                        <div class="controls">
-									   
+									   <table width="80%">
+									   <tr>
+									   <td><label><input type="checkbox" id="set1all">Select All Main Menu</label>
+									   <label><input type="checkbox" id="set2all"> Select All Sub Menu</label>
+									   </td>
+									    <td><label><input type="checkbox" id="set3all"> Select All Add</label>
+									   <label><input type="checkbox" id="set4all"> Select All Edit</label>
+									  <label><input type="checkbox" id="set5all"> Select All Delete</label>
+									   <label><input type="checkbox" id="set6all"> Select All View</label>
+									   <label><input type="checkbox" id="set7all"> Select All Download PDF</label></td>
+									   </tr>
+									 									   
+									   </table>
+								
+									
 									      <?php
 										 $aMainMenuList = $oMaster->getLinkCatList();
 										
 										 foreach($aMainMenuList as $aMainMenu)
 										 {
 										 ?>
-										   <label class="checkbox line">
-                                          <div class="checker" id="uniform-undefined"><span class=""><input type="checkbox" value="<?php echo $aMainMenu['db_lcatId']; ?>" <?php if($oMaster->isLinkAssignedMenu($aMainMenu['db_lcatId'],$item_id) ) { echo 'checked=checked' ;}?>style="opacity: 0;" name="fParentLinks[]"></span></div><b> <?php echo $aMainMenu['db_lcatName']; ?></b>
-                                          </label>
-										
-										
+										  <article id="set1" >
+										   <input type="checkbox" value="<?php echo $aMainMenu['db_lcatId']; ?>" <?php if($oMaster->isLinkAssignedMenu($aMainMenu['db_lcatId'],$item_id) ) { echo 'checked=checked' ;}?> name="fParentLinks[]"><b> <?php echo $aMainMenu['db_lcatName']; ?></b>
+                                            
+										</article>
+										<div style="margin-left: 60px;">
 										 <?php
 										 
 										  
@@ -194,17 +211,75 @@
 										  {
 										    
 										  ?>
-                                          <div style="margin-left: 60px;">
-										  <label class="checkbox line">
-                                          <div class="checker" id="uniform-undefined"><span class=""><input type="checkbox" value="<?php echo $subLink['db_lscatId']; ?>" <?php if($oMaster->isLinkAssigned($subLink['db_lscatId'],$item_id) ) { echo 'checked=checked' ;}?>style="opacity: 0;" name="fLinks[]"></span></div> <?php echo $subLink['db_lscatName']; ?>
-                                          </label>
-										  </div>
+                                          
+										  <table width="100%">
+										  <tr>
+										 
+										  <td colspan="6"> <article id="set2">
+										  <label  style="float:left;"> 
+                                          <input type="checkbox" value="<?php echo $subLink['db_lscatId']; ?>" <?php if($oMaster->isLinkAssigned($subLink['db_lscatId'],$item_id) ) { echo 'checked=checked' ;}?>  name="fLinks[]"> <?php echo $subLink['db_lscatName']; ?> </label>
+								           <br>
+										   </article></td>
+										  </tr>
+										  <tr>
+										 <td>
+										 <table style="margin-left: 50px;">
+										 <tr>
+										 <td>
+										  <article id="set3" >
+									 <label  style="float:left; color: red;"> 
+											<input type="checkbox" value="<?php echo $subLink['db_lscatId']; ?>"   <?php if($oMaster->isLinkAssignedCrud($subLink['db_lscatId'],$item_id,'1') ) { echo 'checked=checked' ;}?> name="fAdd[]"> Add
+											</label>
+											 </article>
+										  
+										  </td>
+										  <td>
+										   <article id="set4" >
+											 <label  style="margin-left: 10px;float:left;color: blue;"> 
+											<input type="checkbox" value="<?php echo $subLink['db_lscatId']; ?>"   <?php if($oMaster->isLinkAssignedCrud($subLink['db_lscatId'],$item_id,'2') ) { echo 'checked=checked' ;}?>name="fEdit[]"> Edit
+											</label>
+											</article>
+										  
+										  </td>
+										  <td>
+										  <article id="set5" >
+											 <label  style="margin-left: 10px;float:left;color: red;"> 
+											<input type="checkbox" value="<?php echo $subLink['db_lscatId']; ?>"   <?php if($oMaster->isLinkAssignedCrud($subLink['db_lscatId'],$item_id,'3') ) { echo 'checked=checked' ;}?> name="fDelete[]"> Delete
+											</label>
+											</article>
+										  </td>
+										  <td>
+										  <article id="set6" >
+											 <label  style="margin-left: 10px;float:left;color: blue;"> 
+											<input type="checkbox" value="<?php echo $subLink['db_lscatId']; ?>"   <?php if($oMaster->isLinkAssignedCrud($subLink['db_lscatId'],$item_id,'4') ) { echo 'checked=checked' ;}?>  name="fView[]"> View
+											</label>
+											</article>
+										  </td>
+										  <td>
+										  <article id="set7" >
+											 <label  style="margin-left: 10px;float:left;color: red;"> 
+											<input type="checkbox" value="<?php echo $subLink['db_lscatId']; ?>"   <?php if($oMaster->isLinkAssignedCrud($subLink['db_lscatId'],$item_id,'5') ) { echo 'checked=checked' ;}?> name="fPdf[]"> Download PDF
+											</label>
+											</article>
+										  </td>
+										 </tr>
+										 </table>
+										 </td>
+										 
+										  
+										  </tr>
+										  
+										  </table>
+										  
+										  
 										  <?php
 										  }
 										  ?>
+										  </div>	
 										   <?php
 										 }
 										 ?>
+										 
                                        </div>
                                     </div>
                                   <input type="hidden" name="fUserId" value="<?php echo $_GET['id'];?>"/>
@@ -221,13 +296,16 @@
 								   } 
 								   ?>                         <button type="button" class="btn">Cancel</button>
                                     </div>
+									</section>
                                  </form>
+								 							 
+								 
                                
                         <!-- END FORM-->           
                      </div>
                   </div>
                   <!-- END SAMPLE FORM PORTLET-->
-                
+               
                </div>
             </div>
             <!-- END PAGE CONTENT-->         
@@ -240,6 +318,47 @@
    </div>
    <!-- END CONTAINER -->
 	<?php include_once 'Footer1.php'; ?>
+	<script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+             $('input[id="set1all"]').click(function() {
+             $("#set1 :checkbox").attr('checked', $(this).attr('checked'));
+        });
+             $('input[id="set2all"]').click(function() {
+             $("#set2 :checkbox").attr('checked', $(this).attr('checked'));
+        })
+             $('input[id="set3all"]').click(function() {
+             $("#set3 :checkbox").attr('checked', $(this).attr('checked'));
+        })
+             $('input[id="set4all"]').click(function() {
+             $("#set4 :checkbox").attr('checked', $(this).attr('checked'));
+        })
+             $('input[id="set5all"]').click(function() {
+             $("#set5 :checkbox").attr('checked', $(this).attr('checked'));
+             })
+			  $('input[id="set6all"]').click(function() {
+             $("#set6 :checkbox").attr('checked', $(this).attr('checked'));
+             })
+			  $('input[id="set7all"]').click(function() {
+             $("#set7 :checkbox").attr('checked', $(this).attr('checked'));
+             });
+            
+     });
+</script>
+	<?php /*?><SCRIPT language="javascript">
+$(function(){
+ 
+    // add multiple select / deselect functionality
+    $("#selectall").click(function () {
+   
+		  $("input[name='fAdd[]']").attr('checked', this.checked);
+    });
+ 
+   
+   
+});
+</SCRIPT><?php */?>
+
 </body>
 <!-- END BODY -->
 </html>

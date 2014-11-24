@@ -8,6 +8,10 @@
 	  {
 	    header("Location: index.php");
 	  }
+	  else
+	  {
+		$login = $aCustomerInfo['CheckLogin'];
+	  }
 	}  
 
 ?>
@@ -71,6 +75,14 @@
     <form class="form-vertical login-form" action="login.php" method="post">
 
       <h3 class="form-title">WELCOME TO AMS </h3>
+      
+      	<?php if($login =='0' )
+		{?>
+         <div class="alert alert-error">
+		<button class="close" data-dismiss="alert"></button>
+        <span>Incorrect Username and Password.</span>
+          </div>
+        <?php } ?>
 
       <div class="alert alert-error hide">
 

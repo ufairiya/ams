@@ -67,28 +67,28 @@ var App = function () {
 
         // handle all elements which require to re-initialize on screen width change(on resize or on rotate mobile device)
         var handleElements = function () {
-            if (App.isPage("index")) {
+            /*if (App.isPage("index")) {
                 handleDashboardCalendar(); // handles full calendar for main page
                 jQuery('.vmaps').each(function () {
                     var map = jQuery(this);
                     map.width(map.parent().width());
                 });
-            }
+            }*/
 
-            if (App.isPage("charts")) {
+            /*if (App.isPage("charts")) {
                 handleChartGraphs();
-            }
+            }*/
 
-            if (App.isPage("maps_vector")) { // jqvector maps requires to fix the width on screen resized.
+            /*if (App.isPage("maps_vector")) { // jqvector maps requires to fix the width on screen resized.
                 jQuery('.vmaps').each(function () {
                     var map = jQuery(this);
                     map.width(map.parent().width());
                 });
-            }
+            }*/
 
-            if (App.isPage("calendar")) { // full calendar requires to fix the width on screen resized.
+            /*if (App.isPage("calendar")) { // full calendar requires to fix the width on screen resized.
                 handleCalendar();
-            }
+            }*/
 
             if ($(window).width() < 900) { // remove sidebar toggler
                 $.cookie('sidebar-closed', null);

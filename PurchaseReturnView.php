@@ -23,6 +23,7 @@
 
 	$edit_result  = $oMaster->getPurchaseReturnItemInfo($item_id,'id');
 	$aVendorInfo = $oAssetVendor->getVendorInfo($edit_result['purchasereturninfo']['id_vendor'],'id');
+	
 
  /*
 echo '<pre>';
@@ -30,6 +31,7 @@ echo '<pre>';
   print_r($aVendorInfo);
   echo '</pre>';*/
  /* exit();*/
+
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
@@ -326,11 +328,19 @@ align='center'>
 align='center'>
   <TBODY></TBODY></TABLE>
 <?php } ?>  
+
+<?php
+$preturnapproval  = $oMaster->getPurchaseReturnItemInfo($item_id);
+//print_r($preturnapproval);
+?>
 <HR>
 <BR><BR>
 <TABLE border='0' cellSpacing='0' borderColor='black' cellPadding='0 'width="100%" 
 align='center'>
   <TBODY>
+  <TR><TD width="25%" align='left'></TD>
+  <TD width="25%" colSpan=2 align='center'></TD>
+  <TD width="25%" align='right'><?php echo $preturnapproval['iteminfo'][0]['employee_preturnapprname'];?></TD></TR>
   <TR class='srow' align='center'>
     <TD width="25%" align='left'><FONT class=subtitle><B>PREPARED 
     BY</B></FONT></TD>

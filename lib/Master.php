@@ -3545,6 +3545,9 @@ public function addPurchaseRequest($aRequest)
 			  $aPurchaseRequestInfo['id_vendor']      = $row->id_vendor;
 			  $aPurchaseRequestInfo['id_unit']      = $row->id_unit;
 			  $aPurchaseRequestInfo['request_by']   = $row->request_by;
+			  $aPurchaseRequestInfo['approved_by']   = $row->approved_by;
+			  $aEmployeeApprName = $this->getEmployeeInfo($row->approved_by);
+			  $aPurchaseRequestInfo['employee_apprname'] = $aEmployeeApprName['employee_name'];
 			  $aPurchaseRequestInfo['remarks']      = $row->remarks;
 			  $aPurchaseRequestInfo['terms_and_conditions']      = $row->terms_and_conditions;
 			  $aPurchaseRequestInfo['request_date'] = $row->request_date;
@@ -4117,6 +4120,24 @@ public function addPurchaseRequest($aRequest)
 		  
 	   }
 	   return $aPurchaseOrderId;
+	}
+	
+	public function getPurchaseOrderApproved($proid)
+	{
+		$qrry = "SELECT * FROM purchase_order WHERE id_po =".$proid;
+		$aPurchaseOrderAppr = array();
+		if($roww = $this->oDb->get_row($qrry))
+	   {
+	      $aPurchaseOrderAppr['id_po'] = $roww->id_po;
+		  $aPurchaseOrderAppr['status'] = $roww->status;
+		  $aPurchaseOrderAppr['po_number'] = $roww->po_number;
+		  $aPurchaseOrderAppr['created_by'] = $roww->created_by;
+		  $aPurchaseOrderAppr['modified_by'] = $roww->modified_by;
+		  $aPurchaseOrderAppr['approved_by'] = $roww->approved_by;
+		  
+		  }
+	   return $aPurchaseOrderAppr;
+		
 	}
 	
 	public function getPurchaseOrderListByGrn($vendorId)
@@ -6019,6 +6040,9 @@ public function addAssetImagesEdit($aRequest,$files,$asseetid=null)
 			   $aInventoryDoc['document_path']= $row->document_path;
 			   $aInventoryDoc['document_name']= $row->document_name;
 			   $aInventoryDoc['status']= $row->status;
+			   $aInventoryDoc['created_by']= $row->created_by;
+			   $agrncreatorName = $this->getEmployeeInfo($row->created_by);
+			  $aInventoryDoc['employee_grncreatorname'] = $agrncreatorName['employee_name'];
 				
 				}
 				return $aInventoryDoc;
@@ -12948,6 +12972,10 @@ public function getPurchaseReturnItemInfo($lookup, $type)
 				$aPurchaseReturnItem['return_qty']     = $row->return_qty;
 
 				$aPurchaseReturnItem['sender_id']     = $row->sender_id;
+				
+				$apreturnApprName = $this->getEmployeeInfo($row->sender_id);
+				 
+			    $aPurchaseReturnItem['employee_preturnapprname'] = $apreturnApprName['employee_name'];
 
 				$aPurchaseReturnItem['id_itemgroup1']      = $row->id_itemgroup1;
 
@@ -14276,7 +14304,15 @@ $qry = "SELECT * FROM asset_sales_invoice_item WHERE status !=2 ";
 		$aSalesInvoiceItemInfo['id_itemgroup1'] = $row->id_itemgroup1;
 
 		$aSalesInvoiceItemInfo['id_itemgroup2'] = $row->id_itemgroup2;
-
+		
+		$aGroup2name = $this->getItemGroup2Info($row->id_itemgroup2,'id');
+		
+		$aGroup1name = $this->getItemGroup1Info( $row->id_itemgroup1,'id');
+		
+		$aSalesInvoiceItemInfo['itemgroup1_name']       = $aGroup1name['itemgroup1_name'];
+		
+		$aSalesInvoiceItemInfo['itemgroup2_name']       = $aGroup2name['itemgroup2_name'];
+		
 		$aSalesInvoiceItemInfo['id_item'] = $row->id_item;
 
 		$aSalesInvoiceItemInfo['quantity'] = $row->quantity;
@@ -14312,10 +14348,15 @@ $qry = "SELECT * FROM asset_sales_invoice_item WHERE status !=2 ";
 		$aSalesInvoiceItemInfo['delivery_number'] = $aSalesInvoiceDetails[0]['delivery_number'];
 
 		$aSalesInvoiceItemInfo['vendor_name'] = $aSalesInvoiceDetails[0]['vendor_name'];
+		
+		$aSalesInvoiceItemInfo['created_by'] = $row->created_by;
+		
+		$ainvoiceprepName = $this->getEmployeeInfo($row->created_by);
+		
+		$aSalesInvoiceItemInfo['employee_invoiceprepname'] = $ainvoiceprepName['employee_name'];
 
 		
-
-		}
+}
 
 		return $aSalesInvoiceItemInfo;
 
@@ -14947,6 +14988,13 @@ if($result = $this->oDb->get_row($sql))
 	}
 	return $exist;
 }
+
+public function getsalesInvoiceview()
+{
+$qry = "SELECT * FROM asset_sales_invoice WHERE 1=1";
+$result = $this->oDb->get_results($qry);
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } //end Master

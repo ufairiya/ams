@@ -122,7 +122,7 @@
 						<!-- BEGIN EXAMPLE TABLE PORTLET-->
 						<div class="portlet box blue">
 							<div class="portlet-title">
-								<h4><i class="icon-globe"></i>Item Group Master</h4>
+								<h4><i class="icon-globe"></i>Item Group 1 Master</h4>
 								<div class="tools">
 									<a href="javascript:;" class="collapse"></a>
 									</div>

@@ -10,28 +10,28 @@
   $oAssetType = &Singleton::getInstance('AssetType');
   $oAssetType->setDb($oDb);
 	
-	  $oAssetCategory = &Singleton::getInstance('AssetCategory');
+  $oAssetCategory = &Singleton::getInstance('AssetCategory');
   $oAssetCategory->setDb($oDb);
 	
   if(isset($aRequest['add']))
   {
     if($oAssetType->addAssetType($aRequest))
 	{
-	   $msg = "New AssetType Added.";
+	   $msg = "New Asset Type Added.";
 	   echo '<script type="text/javascript">window.location.href="AssetType.php?msg=success";</script>';
 	}
-	else $msg = "Sorry";
+	else $msg = "Sorry. Possible duplicate values found.";
   } //submit
  $allResult = $oAssetType->getAllAssetTypeList();
    if(isset($aRequest['Update']))
   {
     if($oAssetType->updateAssetType($aRequest))
 	{
-	  $msg = "New Building Updated.";
+	  $msg = "Asset Type Updated.";
 	 $page = $_SERVER['PHP_SELF'];
      echo '<script type="text/javascript">window.location.href="AssetType.php?msg=updatesucess";</script>';
 	}
-	else $msg = "Sorry";
+	else $msg = "Sorry. Duplicate values found.";
   } //update
   if($_REQUEST['action'] == 'edit')
   {

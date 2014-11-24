@@ -77,6 +77,11 @@
   $edit_result['status'] =1;
   }
   
+  if($aRequest['action'] == 'Cancel')
+  {
+	 echo '<script type="text/javascript">window.location.href="Item.php";</script>'; 
+  } //cancel
+  
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
@@ -179,9 +184,7 @@
                         <?php } ?>
                         <div class="tools">
                            <a href="javascript:;" class="collapse"></a>
-                           <a href="#portlet-config" data-toggle="modal" class="config"></a>
-                           <a href="javascript:;" class="reload"></a>
-                           <a href="javascript:;" class="remove"></a>
+                        
                         </div>
                      </div>
                      <div class="portlet-body form">
@@ -226,7 +229,7 @@
 									 <div class="control-group" id="group1">
                                        <label class="control-label">Item Group I<span class="required">*</span></label>
                                        <div class="controls">
-									 <select class="large m-wrap" tabindex="2" name="fGroup1">
+									 <select class="large m-wrap fItemGroup1Id" tabindex="2" name="fGroup1">
                                             <option value="0" selected="selected" >Choose the ItemGroup 1 </option>
 											 <?php
 											  $aItemGroup1List = $oMaster->getItemGroup1List();
@@ -239,13 +242,15 @@
 											  }
 											 ?>
                                           </select>
+										   <span><a href="#" class="itemgroup1" title="Add New Item Group 1"><i class="icon-plus-sign" style="color:#009900;"></i></a></span>
                                            </div>
+										  
                                     </div> 
 										                                     
                                   <div class="control-group">
                                        <label class="control-label">Brand/Make<span class="required">*</span></label>
                                        <div class="controls">
-                                         <select class="large m-wrap" tabindex="1" name="fGroup2" id="fGroup2">
+                                         <select class="large m-wrap fItemGroup2Id" tabindex="1" name="fGroup2" id="fGroup2">
 											 <option value="">Choose the Brand/Make</option>
 											 <?php
 											  $aGroup2List = $oMaster->getItemGroup2List();
@@ -258,7 +263,7 @@
 											  }
 											 ?>
                                           </select>
-                                          
+                                           <span><a href="#" class="itemgroup2" title="Add New Item Group 2"><i class="icon-plus-sign" style="color:#009900;"></i></a></span>
                                        </div>
                                     </div>
 									<?php if($aRequest['action'] !='edit')
@@ -319,7 +324,7 @@
                                    <?php
 								   } 
 								   ?>
-								   <button type="button" class="btn">Cancel</button>
+								   <button type="submit" class="btn" name="action" value="Cancel">Cancel</button>
                                     </div>
                                  </form>
                                

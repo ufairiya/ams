@@ -1,6 +1,6 @@
 <?php
   include_once 'ApplicationHeader.php'; 
-  if(!$oCustomer->isLoggedIn())
+  if(!$oCustomer->isAdmin())
   {
 	header("Location: login.php");
   }
@@ -8,38 +8,75 @@
   $aRequest = $_REQUEST;
    $oAssetUnit = &Singleton::getInstance('AssetUnit');
   $oAssetUnit->setDb($oDb);
- 
+
   if(isset($aRequest['send']))
   {
-    if($oCustomer->registerNewCustomer($aRequest))
+    if($aresult = $oCustomer->registerNewCustomer($aRequest))
 	{
-	   $msg = "New User Added.";
-	  echo '<script type="text/javascript">window.location.href="User.php?msg=success";</script>';
+	  switch($aresult['msg'])
+	  {
+		case 1:
+		$msg = "New User Added.";
+		echo '<script type="text/javascript">window.location.href="User.php?msg=success";</script>';
+		break;
+		case 2:
+		$msg = "Username Already Exist.";
+		 $page = $_SERVER['HTTP_REFERER'];
+	     $sec = "1";
+         header("Refresh: $sec; url=$page");
+		break;
+		default :
+		$msg = "sorry could not added..";
+		break;
 	}
-	else $msg = "Sorry could not add..";
+	}
+	
   } 
  if($_REQUEST['action'] == 'Add')
   {
+  $usertype  = "Add User";
  $edit_result['user_type'] = 'New';
  }
   if($_REQUEST['action'] == 'edit')
   {
+    $usertype  = "Edit User";
 	$item_id = $_REQUEST['id'];
 	$edit_result = $oCustomer->getUserInfo($item_id,'id');
-	/*echo '<pre>';
-	print_r($edit_result );
-		echo '</pre>';*/
+	//echo '<pre>';
+	//print_r($edit_result );
+		//echo '</pre>';
 	
   } //edit
    if(isset($aRequest['Update']))
   {
-  if($oCustomer->updateProfileInfo($aRequest))
+  	//echo '<pre>';
+	//print_r($aRequest );
+		//echo '</pre>';
+  if($aresult = $oCustomer->updateProfileInfo($aRequest))
 	{
-	
-	  echo '<script type="text/javascript">window.location.href="User.php?msg=updatesucess";</script>';
+	 // print_r($aresult);
+	  //exit();
+	 switch($aresult['msg'])
+	  {
+		case 1:
+		echo '<script type="text/javascript">window.location.href="User.php?msg=updatesucess";</script>';
+		break;
+		case 2:
+		$msg = "Username Already Exist.";
+		 $page = $_SERVER['HTTP_REFERER'];
+	     $sec = "1";
+         header("Refresh: $sec; url=$page");
+		break;
+		default :
+		$msg = "sorry could not added..";
+		break;
+	}
+	  
 	}
 	else $msg = "Sorry could not add..";
   } 
+  
+ 
   
 ?>
 <!DOCTYPE html>
@@ -99,10 +136,11 @@
                         <span class="icon-angle-right"></span>
                      </li>
                      <li>
-                        <a href="#">Extra</a>
+                        <a href="#">User List</a>
                         <span class="icon-angle-right"></span>
                      </li>
-                     <li><a href="#">User</a></li>
+					 
+                     <li><a href="#"><?php echo $usertype;?></a></li>
                   </ul>
                </div>
             </div>
@@ -114,7 +152,7 @@
 							    <div class="alert alert-success">
 									<button class="close" data-dismiss="alert"></button>
 									<?php echo $msg; unset($msg); ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="User.php" class="btn red mini active">Back to List</a>
+									<a href="User.php" class="btn red mini active">Back to List</a>
 								</div>
                                 
 								<?php
@@ -135,18 +173,8 @@
                <!-- BEGIN SAMPLE FORM PORTLET-->   
                   <div class="portlet box blue">
                      <div class="portlet-title">
-                      <?php if($aRequest['action'] == 'Add')
-							{ ?>
-                        <h4><i class="icon-reorder"></i>Add User</h4>
-                         <?php } else {?>
-                          <h4><i class="icon-reorder"></i>Edit User</h4>
-                        <?php } ?>
-                        <div class="tools">
-                           <a href="javascript:;" class="collapse"></a>
-                           <a href="#portlet-config" data-toggle="modal" class="config"></a>
-                           <a href="javascript:;" class="reload"></a>
-                           <a href="javascript:;" class="remove"></a>
-                        </div>
+                    <h4><i class="icon-reorder"></i><?php echo $usertype;?></h4>
+                          
                      </div>
                      <div class="portlet-body form">
                         <!-- BEGIN FORM-->
@@ -333,7 +361,7 @@
 											  {
 			  
 											 ?>
-                                             <option value="<?php echo $aUserRole['role_id']; ?>" <?php if($edit_result['role_id'] == $aUserRole['role_id']) { echo 'selected=selected' ;}?>><?php echo $aUserRole['role_name']; ?></option>
+                                             <option value="<?php echo $aUserRole['role_id']; ?>" <?php if($edit_result['db_roleId'] == $aUserRole['role_id']) { echo 'selected=selected' ;}?>><?php echo $aUserRole['role_name']; ?></option>
                                              <?php
 											  }
 											 ?>
@@ -373,7 +401,7 @@
                                           Active
                                           </label>
                                           <label class="radio line">
-                                          <input type="radio" name="fStatus" tabindex="21" value="0" <?php if($edit_result['status'] == '0') { echo 'checked=checked' ;}?> />
+                                          <input type="radio" name="fStatus" tabindex="21" value="0" <?php if($edit_result['status'] == '0' ||  $edit_result['status'] == '2') { echo 'checked=checked' ;}?> />
                                           In-Active
                                           </label>  
                                        </div>
@@ -381,15 +409,16 @@
                                  
 									
                                     <div class="form-actions">
-                                   <?php if($aRequest['action'] == 'Add')
+                                   <?php if($aRequest['action'] == 'edit')
 								   {
 								   ?>
-                                   <button type="submit" class="btn blue" name="send"><i class="icon-ok"></i>Add User</button>                          
+								    <button type="submit" class="btn blue" name="Update"><i class="icon-ok"></i>Update User</button> 
+									 <input type="hidden" name="fUserId" value="<?php echo $aRequest['id'];?>"/>
+                                                       
 								   <?php
 								   } else {
 								   ?>
-                                    <button type="submit" class="btn blue" name="Update"><i class="icon-ok"></i>Update User</button> 
-									 <input type="hidden" name="fUserId" value="<?php echo $aRequest['id'];?>"/>
+                                      <button type="submit" class="btn blue" name="send"><i class="icon-ok"></i>Add User</button>   
                                    <?php
 								   } 
 								   ?>
@@ -421,10 +450,10 @@
         var username = $(this).val();  
   var dataString = 'action=checkusername&username='+ username;
   	$("#flash").show();
-		$("#flash").fadeIn(400).html('<img src="assets/img/gif-load.gif"/>');
+		$("#flash").fadeIn(400).html('<img src="../assets/img/gif-load.gif"/>');
 		$.ajax({
 			   type: "POST",
-			   url: "ajax/ajax.php",
+			   url: "ajax.php",
 			   data: dataString,
 			   cache: false,
 			   success: function(result){
@@ -470,7 +499,7 @@
 			var dataStr = 'action=getUserType&type='+value+'&id='+id;
 			 $.ajax({
 			   type: 'POST',
-			   url: 'ajax/ajax.php',
+			   url: 'ajax.php',
 			   data: dataStr,
 			   cache: false,
 			   success: function(result) {

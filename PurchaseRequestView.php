@@ -19,11 +19,14 @@
   {
      $item_id = $aRequest['purchaseRequestId'];
   }
+  $preqid = $aRequest['id'];
   $edit_result = $oMaster->getPurchaseRequestItemInfo($item_id,'id');
   $allResult = $oMaster->getPurchaseRequestInfo($edit_result['iteminfo'][0]['id_pr'],'id');
   $aVendorAddressInfo =  $oMaster->getVendorAddress($vendor_id,'');	
   $oAssetVendor = &Singleton::getInstance('Vendor');
   $oAssetVendor->setDb($oDb);
+  $prapproval = $oMaster->getPurchaseRequestInfo($preqid);
+  //print_r($prapproval);
    ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
@@ -267,6 +270,9 @@ align='center'>
 <TABLE border="0" cellSpacing="0" borderColor="black" cellPadding=0 width="100%" 
 align="center">
   <TBODY>
+  <TR><TD width="25%" align="left"><?php echo $allResult['employee_name'];?></TD>
+  <TD width="25%" colSpan=2 align="center"></TD>
+  <TD width="25%" align="right"><?php echo $prapproval['employee_apprname'];?></TD></TR>
   <TR class="srow" align="center">
     <TD width="25%" align="left"><FONT class="subtitle"><B>PREPARED 
     BY</B></FONT></TD>
@@ -274,6 +280,7 @@ align="center">
       BY</B></FONT></TD>
     <TD width="25%" align="right"><FONT class="subtitle"><B>APPROVED 
     BY</B></FONT></TD></TR>
+     
   <TR class="srow">
     <TD colSpan=4>
       <HR width="100%" bordercolor="black" border="1">
